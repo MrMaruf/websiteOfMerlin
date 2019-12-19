@@ -1,7 +1,9 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {Router} from "@angular/router";
-
 import * as firebase from 'firebase';
+import { environment } from 'src/environments/environment.firebase';
+
+firebase.initializeApp(environment.firebase)
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ import * as firebase from 'firebase';
 export class AuthService {
   @Output() loggedIn = new EventEmitter;
   constructor(private router: Router) {
-
+    
   }
 
   private token: string = '';
