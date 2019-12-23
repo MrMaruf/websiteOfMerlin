@@ -1,0 +1,65 @@
+<div class="media">
+    <img src="assets/img/portrait.jpg" class="mr-3" alt="...">
+    <form [formGroup]="chapterForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Chapter Name</label>
+            <input formControlName="name" type="text" class="form-control" id="chapterName"
+                placeholder="Level 0. Chapter Name">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="number">Chapter Number</label>
+                <input formControlName="number" type="number" class="form-control" id="number"
+                    placeholder="">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="exampleFormControlTextarea1">Chapter Description</label>
+                <textarea formControlName="description" class="form-control" id="exampleFormControlTextarea1"
+                    rows="3"></textarea>
+            </div>
+        </div>
+        <div formGroupName="character">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="characterName">Character Name</label>
+                    <input formControlName="name" type="text" class="form-control" id="characterName"
+                        placeholder="Character Name">
+                </div>
+                <div>
+                    <label for="age">Age</label>
+                    <input formControlName="age" type="number" class="form-control" id="age"
+                        placeholder="">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="health">Health</label>
+                    <input formControlName="health" type="number" class="form-control" id="health">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="magicka">Magicka</label>
+                    <input formControlName="magicka" type="number" id="magicka" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="stamina">Stamina</label>
+                    <input formControlName="stamina" type="number" class="form-control" id="stamina">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="magickaModifier">Magicka Modifier</label>
+                    <input formControlName="magickaModifier" type="number" class="form-control" id="magickaModifier">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="talent">Talent</label>
+                    <input formControlName="talent" type="number" id="talent" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="talentCalculated">Calculated Talent</label>
+                    <input formControlName="talentCalculated" type="number" class="form-control" id="talentCalculated">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+</div>
