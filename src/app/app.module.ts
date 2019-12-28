@@ -30,10 +30,13 @@ import { SearchPipe } from './shared/search.pipe';
 import { HistoryService } from './history/history.service';
 import { ChapterComponent } from './history/chapter/chapter.component';
 import { ChapterResolver } from './history/chapter/chapter-resolver.service';
-import { SkillComponent } from './history/skill/skill.component';
-import { AbilityComponent } from './history/ability/ability.component';
-import { SavesComponent } from './history/saves/saves.component';
-import { SpellComponent } from './history/spell/spell.component';
+import { SkillComponent } from './history/chapter/skill/skill.component';
+import { AbilityComponent } from './history/chapter/ability/ability.component';
+import { SavesComponent } from './history/chapter/saves/saves.component';
+import { SpellComponent } from './history/chapter/spell/spell.component';
+import { FooterComponent } from './footer/footer.component';
+import { FirebaseService } from './shared/firebase.service';
+import { SkillsComponent } from './history/chapter/skills/skills.component';
 
 /*
 Sub-components imports end
@@ -55,6 +58,8 @@ Sub-components imports end
     AbilityComponent,
     SavesComponent,
     SpellComponent,
+    FooterComponent,
+    SkillsComponent,
 
   ],
   imports: [
@@ -69,6 +74,7 @@ Sub-components imports end
     HttpClientModule,
   ],
   providers: [
+    FirebaseService,
     HistoryService,
     ChapterResolver,
     

@@ -3,12 +3,12 @@ import { Complexity } from './enums';
 export class Spell {
     private _name: string;
     private _description: string;
-    private complexity: Complexity;
+    private _complexity: Complexity;
 
 	constructor(name: string, description: string, $complexity: Complexity) {
 		this._name = name;
 		this._description = description;
-		this.complexity = $complexity;
+		this._complexity = $complexity;
 	}
 
     /**
@@ -47,16 +47,16 @@ export class Spell {
      * Getter $complexity
      * @return {Complexity}
      */
-	public get $complexity(): Complexity {
-		return this.complexity;
+	public get complexity(): Complexity {
+		return this._complexity;
 	}
 
     /**
      * Setter $complexity
      * @param {Complexity} value
      */
-	public set $complexity(value: Complexity) {
-		this.complexity = value;
+	public set complexity(value: Complexity) {
+		this._complexity = value;
 	}
 
 }

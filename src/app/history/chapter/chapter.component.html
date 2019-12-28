@@ -9,8 +9,7 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="number">Chapter Number</label>
-                <input formControlName="number" type="number" class="form-control" id="number"
-                    placeholder="">
+                <input formControlName="number" type="number" class="form-control" id="number" placeholder="">
             </div>
             <div class="form-group col-md-6">
                 <label for="exampleFormControlTextarea1">Chapter Description</label>
@@ -27,8 +26,7 @@
                 </div>
                 <div>
                     <label for="age">Age</label>
-                    <input formControlName="age" type="number" class="form-control" id="age"
-                        placeholder="">
+                    <input formControlName="age" type="number" class="form-control" id="age" placeholder="">
                 </div>
             </div>
             <div class="form-row">
@@ -60,6 +58,156 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+
+        <button *ngIf="isAuthor" type="submit" class="btn btn-primary">Save</button>
     </form>
+</div>
+
+<div class="col">
+    <nav class="nav nav-tabs flex-column flex-sm-row border-dark pd-3 ">
+        <a class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['skills']"
+            [class.disabled]="selectedChapter.skills.length < 1 " (click)="onTabSwitch('skills')">Skills</a>
+        <a class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['abilities']"
+            [class.disabled]="selectedChapter.abilities.length < 1 " (click)="onTabSwitch('abilities')">Abilities</a>
+        <a class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['spells']"
+            [class.disabled]="selectedChapter.spells.length < 1 " (click)="onTabSwitch('spells')">Spells</a>
+        <a class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['saves']"
+            (click)="onTabSwitch('saves')">Saves</a>
+    </nav>
+    <form [formGroup]="chapterForm" class="m-5">
+
+        <div formArrayName="skills" *ngIf="tabs['skills']">
+            <div *ngFor="let item of selectedChapter.skills;let i = index" [formGroupName]="i">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="{{item.name}}">Name</label>
+                        <input formControlName="name" type="text" class="form-control" [id]="item.name">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{item.name}}_level">Level</label>
+                        <input formControlName="level" type="text" class="form-control" id="{{item.name}}_level">
+                    </div>
+                    <!-- <div class="form-row" *ngIf="showDetails"> -->
+                    <div class="form-group col-md-3">
+                        <label for="{{item.name}}_description">Description</label>
+                        <textarea formControlName="description" class="form-control" id="{{item.name}}_description"
+                            rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{item.name}}_history">History</label>
+                        <textarea formControlName="history" class="form-control" id="{{item.name}}_history"
+                            rows="3"></textarea>
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input formControlName="changed" class="form-check-input" type="checkbox"
+                            id="{{item.name}}_changed">
+                        <label class="form-check-label" for="{{item.name}}_changed">
+                            Changed
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div formArrayName="abilities" *ngIf="tabs['abilities']">
+            <div *ngFor="let item of selectedChapter.abilities ; let i = index" [formGroupName]="i">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="{{item.name}}">Name</label>
+                        <input formControlName="name" type="text" class="form-control" [id]="item.name">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{item.name}}_tier">Tier</label>
+                        <select formControlName="tier" class="form-control" id="{{item.name}}_tier">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <!-- <div class="form-row" *ngIf="showDetails"> -->
+                    <div class="form-group col-md-3">
+                        <label for="{{item.name}}_description">Description</label>
+                        <textarea formControlName="description" class="form-control" id="{{item.name}}_description"
+                            rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="{{item.name}}_skill">Skill</label>
+                        <select formControlName="skill" class="form-control" id="{{item.name}}_skill">
+                            <option *ngFor="let skill of selectedChapter.skills" [ngValue]="skill">{{skill.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{item.name}}_status">Status</label>
+                        <select formControlName="status" class="form-control" id="{{item.name}}_skillName">
+                            <option value="Status['Blocked']">Blocked</option>
+                            <option value="Status['Learned']">Learned</option>
+                            <option value="Status['Not Learned']">Not Learned</option>
+                            <option value="Status['Upgraded']">Upgraded</option>
+                        </select>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div formArrayName="spells" *ngIf="tabs['spells']">
+            <div *ngFor="let item of selectedChapter.spells;let i = index" [formGroupName]="i">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="{{item.name}}">Name</label>
+                        <input formControlName="name" type="text" class="form-control" [id]="item.name">
+                    </div>
+                    <!-- <div class="form-row" *ngIf="showDetails"> -->
+                    <div class="form-group col-md-4">
+                        <label for="{{item.name}}_description">Description</label>
+                        <textarea formControlName="description" class="form-control" id="{{item.name}}_description"
+                            rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{item.name}}_status">Complexity</label>
+                        <select formControlName="status" class="form-control" id="{{item.name}}_skillName">
+                            <option *ngFor="let itemC of Complexity" value="Complexity[itemC]">{{itemC}}</option>
+                            <!-- <option value="Complexity['Learned']">Learned</option>
+                            <option value="Complexity['Not Learned']">Not Learned</option>
+                            <option value="Complexity['Upgraded']">Upgraded</option> -->
+                        </select>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div formArrayName="saves" *ngIf="tabs['saves']">
+            <div *ngFor="let item of selectedChapter.saves;let i = index" [formGroupName]="i">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="{{item.name}}">Name</label>
+                        <input formControlName="name" type="text" class="form-control" [id]="item.name">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="{{item.name}}_index">Level</label>
+                        <input formControlName="index" type="text" class="form-control" id="{{item.name}}_index">
+                    </div>
+                    <!-- <div class="form-row" *ngIf="showDetails"> -->
+                    <div class="form-group col-md-4">
+                        <label for="{{item.name}}_description">Description</label>
+                        <textarea formControlName="description" class="form-control" id="{{item.name}}_description"
+                            rows="3"></textarea>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- <form [formGroup]="chapterForm">
+        <div  formArrayName="skills">
+            <app-skill *ngFor="let skill of selectedChapter.skills;let i = index" [index]="i" [chapterForm]="chapterForm" [skill]="skill" [formGroup]="chapterForm.controls.skills.get(i)">
+            </app-skill>
+        </div>
+    </form> -->
 </div>

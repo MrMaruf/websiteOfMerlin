@@ -15,13 +15,15 @@ import { ChapterResolver } from './history/chapter/chapter-resolver.service';
 /*
 Sub-components imports end
 */
-
+const homeMessage:string = 'Welcome to Merlin\'s Website Application!' + 
+' It is just a beginning, so please no worries about emptiness. Content will appear later on!' + 
+' If you have any ideas you want to propose or you noticed a bug of some sort, you can do that in the discord'
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
     component: MessagePageComponent,
-    data: { message: 'Welcome to WEB2 Website Application! It is just a seed, so please no worries. Content will appear later on!' }
+    data: { message:  homeMessage }
   },
   { path: 'information', redirectTo: '' },
   { path: 'about', component: AboutComponent },

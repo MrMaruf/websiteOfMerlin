@@ -1,19 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Chapter } from '../models/chapter.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { FirebaseService } from '../shared/firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
 
-  constructor() { }
+  constructor(private firebaseService: FirebaseService) { }
 
   chaptersChanged = new Subject<Chapter[]>();
 
 
   private chapters: Chapter[] = [];
+  getAllData() {
+    this.firebaseService.getChapters('chapters').subscribe(response => {
 
+      // assingning of chapters 
+      const chapters: Chapter[] = response;
+
+      // getting it to history
+      this.setChapters(chapters);
+      // this.length = chapters.length;
+    });
+  }
+  saveAllData() {
+    // let token = this..getToken();
+  }
   setChapters(newChapters: Chapter[]) {
     for (const chapter of newChapters) {
       if (!chapter.skills) {
@@ -21,6 +35,9 @@ export class HistoryService {
       }
       if (!chapter.abilities) {
         chapter.abilities = [];
+      }
+      if (!chapter.spells) {
+        chapter.spells = [];
       }
     }
     this.chapters = newChapters.slice();
@@ -32,7 +49,12 @@ export class HistoryService {
   }
 
   getChapter(index: number) {
-    return this.chapters[index];
+    if (this.chapters[index]) {
+      return this.chapters[index];
+    }
+    // else {
+    //   return this.firebaseService.getItemAt('/chapters/' + index)
+    // }
   }
 
   // getChapterById(id: number) {
@@ -71,7 +93,9 @@ export class HistoryService {
     this.chapters.splice(index, 1);
     this.chaptersChanged.next(this.chapters.slice());
   }
-
+  chaptersStatus(): boolean {
+    return this.chapters.length > 0 ? true : false;
+  }
   // updateChapterById(id: number, newChapter: Chapter) {
   //   for (let i = 0; i < this.chapter.length; i++) {
   //     if (this.chapter[i].id === id) {

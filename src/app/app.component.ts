@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataStorageService } from './shared/data-storage.service';
+import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
+import { HistoryService } from './history/history.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,15 @@ import { DataStorageService } from './shared/data-storage.service';
 })
 export class AppComponent implements OnInit {
   title = 'websiteOfMerlin';
-  constructor(private dsService: DataStorageService){}
+  constructor(private historyService: HistoryService, private authService: AuthService, private router: Router){
+    
+  }
   ngOnInit(){
-    this.dsService.getAllData();
+    if(!this.authService.getAuthState()['authorised'])
+    {
+      this.router.navigate(['/'])
+    }
+    this.historyService.getAllData();
+    
   }
 }

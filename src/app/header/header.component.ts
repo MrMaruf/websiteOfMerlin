@@ -1,51 +1,42 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, OnDestroy } from '@angular/core';
 // import {DataStorageService} from '../shared/data-storage.service';
 import { AuthService } from "../auth/auth.service";
-import { DataStorageService } from '../shared/data-storage.service';
+import { FirebaseService } from '../shared/firebase.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { HistoryService } from '../history/history.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   link: string = '';
   private clicked = false;
   public authorised = false;
   public author = false;
   activeClass = "active";
-  currentRoute;
+  progressIndex = 43;
+  private subscription: Subscription;
+
   constructor(
     private renderer: Renderer2,
     private authService: AuthService,
-    private router: Router) {
-      router.events.pipe(
-        filter(event => event instanceof NavigationEnd)  
-      ).subscribe((event: NavigationEnd) => {
-        this.currentRoute= router.url;
-      });
+    private firebaseService: FirebaseService,
+    private historyService: HistoryService) {
   }
 
-  // openDropdown() {
-  //   if (!this.clicked) {
-  //     this.renderer.addClass(this.elRef.nativeElement, 'show');
-  //     this.clicked = true;
-  //   } else {
-  //     this.renderer.removeClass(this.elRef.nativeElement, 'show');
-  //     this.clicked = false;
-  //   }
-  // }
 
-  // onFetchData() {
-  //   this.dsService.getAllData();
-  // }
+  onFetchData() {
+    this.historyService.getAllData();
+  }
 
-  // onSaveData() {
-  //   this.dsService.saveAllData();
-  // }
+  onSaveData() {
+    this.historyService.saveAllData();
+  }
 
   onLogout() {
     this.authService.logout().then(
@@ -55,7 +46,6 @@ export class HeaderComponent implements OnInit {
 
   onRefreshToken() {
     this.authService.refreshToken();
-    console.log(this.router);
   }
 
   ngOnInit() {
@@ -63,10 +53,16 @@ export class HeaderComponent implements OnInit {
       () => {
         if (this.authService.getToken()) {
           this.authorised = true;
-          this.author = true;
+          this.author = this.authService.getAuthState[1];
         }
       }
     );
+    this.subscription = this.historyService.chaptersChanged.subscribe(
+      (data) => {
+        this.progressIndex = data.length-1;
+      });
   }
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

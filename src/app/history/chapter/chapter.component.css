@@ -1,0 +1,10 @@
+label{
+    font-weight: bold;
+}
+
+nav > a {
+    font-weight: bold;
+}
+nav > a.active{
+    border: solid 3px;
+}

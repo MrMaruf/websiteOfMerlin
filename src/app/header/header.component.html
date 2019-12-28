@@ -1,52 +1,63 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-        <img src="/assets/img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt=""> Merlin's Site
-    </a>
-    <!-- <a class="navbar-brand" routerLink="about-us">Merlin's Site</a> -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li [class.active]="currentRoute.includes('home')">
-                <a class="nav-link" [routerLink]="''"> Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item" [class.active]="currentRoute.includes('1')">
-                <a class="nav-link" aria-disabled="true" tabindex="-1" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown" [class.active]="currentRoute.includes('history')">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          History
+<header>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" [routerLink]="''">
+            <img src="/assets/img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt=""> Merlin's
+            Site
         </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" routerLink="history">History</a>
-                    <a class="dropdown-item" href="#">Progress</a>
-                    <div class="dropdown-divider"></div>
-                    <hr>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <!-- <li class="nav-item">
+        <!-- <a class="navbar-brand" routerLink="about-us">Merlin's Site</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li [class.active]="currentRoute.includes('home')">
+                    <a class="nav-link" [routerLink]="''"> Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item" [class.active]="currentRoute.includes('history')">
+                    <a class="nav-link" aria-disabled="true" tabindex="-1" routerLink="history">History</a>
+                </li>
+                <li class="nav-item dropdown" [class.active]="currentRoute.includes('progress')">
+                    <a class="nav-link" aria-disabled="true" tabindex="-1" [routerLink]="['/chapter', progressIndex]">Progress</a>
+                </li>
+                <li class="nav-item dropdown" [class.active]="currentRoute.includes('log')">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Author
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <span *ngIf="!authorised">
+                            <a class="dropdown-item" routerLink="login">Login</a>
+                            <!-- <a class="dropdown-item" routerLink="register">Register</a>
+                        <div class="dropdown-divider"></div> -->
+                        </span>
+                        <span *ngIf="authorised">
+                            <a class="dropdown-item" (click)="onLogout()">Logout</a>
+                            <a class="dropdown-item" (click)="onRefreshToken()">Refresh Credentials</a>
+                        </span>
+                    </div>
+                </li>
+                <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Log In</a>
             </li> -->
-        </ul>
-        <div class="btn-group dropleft">
-            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Author
-              </button>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                <div class="dropdown-divider"></div>
-                <span *ngIf="!authorised">
-              <a class="dropdown-item" routerLink="login">Login</a>
-              <!-- <a class="dropdown-item" routerLink="register">Register</a> -->
-              </span>
-                <span *ngIf="authorised">
-              <a class="dropdown-item" (click)="onLogout()">Logout</a>
-              <a class="dropdown-item" (click)="onRefreshToken()">Refresh Credentials</a>
-              </span>
+            </ul>
+            <div class="btn-group dropdown float-right-lg float-md-left">
+                <button type="button" class="btn btn-info dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Author
+                </button>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <span *ngIf="!authorised">
+                        <a class="dropdown-item" routerLink="login">Login</a>
+                        <!-- <a class="dropdown-item" routerLink="register">Register</a> -->
+                    </span>
+                    <span *ngIf="authorised">
+                        <a class="dropdown-item" (click)="onLogout()">Logout</a>
+                        <a class="dropdown-item" (click)="onRefreshToken()">Refresh Credentials</a>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>

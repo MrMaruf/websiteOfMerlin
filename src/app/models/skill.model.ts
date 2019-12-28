@@ -5,7 +5,7 @@ export class Skill {
     private _description: string;
     private _level: number;
     private _history: string;
-    private _changed: boolean;
+    private _changed: boolean = false;
 
     //constructors
 
@@ -69,7 +69,8 @@ export class Skill {
      * @param {number} value
      */
 	public set level(value: number) {
-		this._level = value;
+        this.changeLevel(value)
+		// this._level = value;
 	}
 
     /**

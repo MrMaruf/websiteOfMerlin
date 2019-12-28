@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataStorageService } from '../shared/data-storage.service';
+import { FirebaseService } from '../shared/firebase.service';
 import { HistoryService } from './history.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Chapter } from '../models/chapter.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-history',
@@ -14,7 +15,9 @@ export class HistoryComponent implements OnInit {
   @Input() chapters = this.historyService.getChapters();
   subscription: Subscription;
   filterParam: string = '';
-  constructor( private historyService: HistoryService, private router: Router) { }
+  isAuthor:boolean;
+
+  constructor( private historyService: HistoryService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     if (this.chapters) {
@@ -23,6 +26,7 @@ export class HistoryComponent implements OnInit {
           this.chapters = data;
         });
     }
+    this.isAuthor = this.authService.getAuthState()['isAuthor'];
   }
 
   ngOnDestroy() {

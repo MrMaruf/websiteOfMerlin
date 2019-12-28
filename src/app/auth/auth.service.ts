@@ -1,5 +1,5 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
-import {Router} from "@angular/router";
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Router } from "@angular/router";
 import * as firebase from 'firebase';
 import { environment } from 'src/environments/environment.firebase';
 
@@ -10,11 +10,15 @@ firebase.initializeApp(environment.firebase)
 })
 export class AuthService {
   @Output() loggedIn = new EventEmitter;
-  constructor(private router: Router) {
-    
-  }
 
   private token: string = '';
+  private authorised = false;
+  private isAuthor = false;
+
+  constructor(private router: Router) {
+
+  }
+
 
   signupUser(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -35,6 +39,8 @@ export class AuthService {
           (token: string) => {
             this.token = token;
             this.loggedIn.emit();
+            this.isAuthor = true;
+            this.authorised = true;
           }
         );
         this.router.navigate(['login-success']);
@@ -57,8 +63,14 @@ export class AuthService {
   }
 
   logout() {
+    this.authorised = false;
+    this.isAuthor = false;
     return firebase.auth().signOut().then(
       response => this.token = ''
     );
+  }
+
+  getAuthState() {
+    return {'authorised': this.authorised, 'isAuthor': this.isAuthor};
   }
 }
