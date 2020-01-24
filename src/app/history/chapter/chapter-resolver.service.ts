@@ -13,15 +13,14 @@ export class ChapterResolver {
   constructor(private historyService: HistoryService, private firebaseService: FirebaseService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<Chapter[]> | Promise<Chapter[]> | Chapter[] {
+    Observable<Chapter>[] | Promise<Chapter>[] | Chapter[] {
     let passedIndex = +route.params['index'];
-      const chapters = [
-        this.historyService
-          .getChapter(passedIndex),
-        passedIndex > 0 ? this.historyService.getChapter(passedIndex - 1) : null
-      ];
-      
-      return chapters;
-    
+    const chapters = [null, null];
+
+    this.historyService.getChapter(passedIndex).then(success => chapters[0] = <Chapter>success);
+    chapters[1] = passedIndex > 0 ? this.historyService.getChapter(passedIndex - 1) : null;
+
+    return chapters;
+
   }
 }

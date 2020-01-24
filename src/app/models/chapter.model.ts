@@ -7,7 +7,7 @@ import { Spell } from './spell.model';
 export class Chapter {
     private _name: string;
     private _number: number;
-    private _description: number;
+    private _description: string;
     private _character: Character;
     private _saves: Save[];
     private _skills: Skill[];
@@ -15,7 +15,7 @@ export class Chapter {
     private _spells: Spell[];
 
 
-    constructor(name: string, number: number, description: number, character: Character, saves: Save[], skills: Skill[], abilities: Ability[], spells: Spell[]) {
+    constructor(name: string, number: number, description: string, character: Character, saves: Save[], skills: Skill[], abilities: Ability[], spells: Spell[]) {
         this._name = name;
         this._number = number;
         this._description = description;
@@ -68,17 +68,17 @@ export class Chapter {
 
     /**
      * Getter description
-     * @return {number}
+     * @return {string}
      */
-    public get description(): number {
+    public get description(): string {
         return this._description;
     }
 
     /**
      * Setter description
-     * @param {number} value
+     * @param {string} value
      */
-    public set description(value: number) {
+    public set description(value: string) {
         this._description = value;
     }
 

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
 import { Chapter } from '../models/chapter.model';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,8 @@ export class FirebaseService {
     this.chaptersObservablesRef = this.db.object(listPath);
     return this.chaptersObservablesRef.valueChanges();
   }
-  getItemAt(listPath) {
-    return this.db.object(listPath).valueChanges()
+  async getItemAt(listPath) {
+    return this.db.object(listPath).valueChanges().pipe(first()).toPromise();
   }
   updateChapters(chapters) {
     this.chaptersObservablesRef.update(chapters);

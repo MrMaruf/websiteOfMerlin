@@ -171,7 +171,7 @@
                     <div class="form-group col-md-1">
                         <label for="{{item.name}}_status">Complexity</label>
                         <select formControlName="status" class="form-control" id="{{item.name}}_skillName">
-                            <option *ngFor="let itemC of Complexity" value="Complexity[itemC]">{{itemC}}</option>
+                            <option *ngFor="let itemC of complexities" value="Complexity[itemC]">{{itemC}}</option>
                             <!-- <option value="Complexity['Learned']">Learned</option>
                             <option value="Complexity['Not Learned']">Not Learned</option>
                             <option value="Complexity['Upgraded']">Upgraded</option> -->

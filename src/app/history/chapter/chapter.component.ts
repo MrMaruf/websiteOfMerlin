@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Data } from '@angular/router';
 import { HistoryService } from '../history.service';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
@@ -11,18 +11,30 @@ import { Save } from 'src/app/models/save.model';
 import { Character } from 'src/app/models/character.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Status, Complexity } from 'src/app/models/enums';
+import { timeout } from 'rxjs/operators';
 @Component({
   selector: 'app-chapter',
   templateUrl: './chapter.component.html',
   styleUrls: ['./chapter.component.css']
 })
 export class ChapterComponent implements OnInit {
-  subscriptionChapter: Subscription;
+
   selectedChapter: Chapter;
   previousChapter: Chapter;
+
   chapterIndex: number;
   chapterForm: FormGroup;
-  new: boolean = true;
+  new: boolean = false;
+  complexities = [
+    "Extremely Simple",
+    "Simple",
+    "Normal",
+    "Complex",
+    "Immensly Complex",
+    "Human Apex",
+    "Beyond Human Scope",
+    "God Level"
+  ]
   tabs = {
     'skills': false,
     'abilities': false,
@@ -40,22 +52,38 @@ export class ChapterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.subscriptionChapter = this.route.data.subscribe(
-      (data: Data) => {
-        this.isAuthor = this.authService.getAuthState()['isAuthor'];
-        this.selectedChapter = data['chapters'][0];
-        this.previousChapter = data['chapters'][1];
-        console.log(data);
-        if (this.selectedChapter) {
-          this.initForm(this.selectedChapter);
-        }
-        console.log(this.chapterForm);
-        this.chapterForm.controls['number'].disable();
-        this.new = false;
-      });
-      for(var item in Complexity){
-      console.log(Complexity[item]);
-      }
+    if (this.route.params['index'] === "new")
+      this.new = true;
+    this.isAuthor = this.authService.getAuthState()['isAuthor'];
+    this.initChapter();
+
+
+    // this.subscriptionChapter = this.route.data.subscribe(
+    //   (data: Data) => {
+
+    //     this.selectedChapter = data['chapters'][0];
+    //     this.previousChapter = data['chapters'][1];
+    //     console.log(data);
+    //     if (this.selectedChapter) {
+    //       this.initForm(this.selectedChapter);
+    //     }
+    //     console.log(this.chapterForm);
+    //     this.chapterForm.controls['number'].disable();
+    //     this.new = false;
+    //   });
+    // for (var item in Complexity) {
+    //   console.log(Complexity[item]);
+    // }
+  }
+  private initChapter() {
+
+    this.getChapters().then(success => {
+      console.log(this.selectedChapter);
+      this.initForm(this.selectedChapter);
+    });
+
+
+    this.chapterForm.controls['number'].disable();
   }
   private initForm(chapter: Chapter) {
     let number = chapter.number;
@@ -87,34 +115,34 @@ export class ChapterComponent implements OnInit {
       'spells': new FormArray([]),
       'saves': new FormArray([]),
 
-      
+
     });
-    if(skills.length>0){
-      for(let skill of skills){
+    if (skills.length > 0) {
+      for (let skill of skills) {
         this.updateFormSkill(skill);
       }
     }
-    if(abilities.length>0){
-      for(let ability of abilities){
+    if (abilities.length > 0) {
+      for (let ability of abilities) {
         this.updateFormAbility(ability);
       }
     }
-    if(spells.length>0){
-      for(let spell of spells){
+    if (spells.length > 0) {
+      for (let spell of spells) {
         this.updateFormSpell(spell);
       }
     }
-    for(let save of saves){
+    for (let save of saves) {
       this.updateFormSave(save);
     }
   }
-  
+
   updateFormSkill(skill: Skill) {
     let name: string = "";
     let level: number;
     let description: string = "";
     let history: string = "";
-    let changed:boolean = false;
+    let changed: boolean = false;
     if (skill) {
       name = skill.name;
       level = skill.level;
@@ -125,12 +153,12 @@ export class ChapterComponent implements OnInit {
 
     let skills = this.chapterForm.get('skills') as FormArray;
     let formGroup = this.formBuilder.group({
-      name:name,
-      level:level,
-      description:description,
-      history:history,
-      changed:changed
-    }) 
+      name: name,
+      level: level,
+      description: description,
+      history: history,
+      changed: changed
+    })
     skills.push(formGroup);
   }
 
@@ -138,8 +166,8 @@ export class ChapterComponent implements OnInit {
     let name: string = "";
     let description: string = "";
     let tier: number;
-    let skill:Skill;
-    let status:Status = 1;
+    let skill: Skill;
+    let status: Status = 1;
 
     if (ability) {
       name = ability.name;
@@ -151,19 +179,19 @@ export class ChapterComponent implements OnInit {
 
     let abilities = this.chapterForm.get('abilities') as FormArray;
     let formGroup = this.formBuilder.group({
-      name:name,
-      tier:tier,
-      description:description,
-      skill:skill,
-      status:status
-    }) 
+      name: name,
+      tier: tier,
+      description: description,
+      skill: skill,
+      status: status
+    })
     abilities.push(formGroup);
   }
   updateFormSpell(spell: Spell) {
     let name: string = "";
     let description: string = "";
-    let complexity:Complexity = 1;
-    
+    let complexity: Complexity = 1;
+
     if (spell) {
       name = spell.name;
       description = spell.description;
@@ -172,16 +200,16 @@ export class ChapterComponent implements OnInit {
 
     let spells = this.chapterForm.get('spells') as FormArray;
     let formGroup = this.formBuilder.group({
-      name:name,
-      description:description,
-      complexity:complexity
-    }) 
+      name: name,
+      description: description,
+      complexity: complexity
+    })
     spells.push(formGroup);
   }
   updateFormSave(save: Save) {
     let name: string = "";
     let description: string = "";
-    let index:number;
+    let index: number;
 
     if (save) {
       name = save.name;
@@ -191,19 +219,38 @@ export class ChapterComponent implements OnInit {
 
     let spells = this.chapterForm.get('saves') as FormArray;
     let formGroup = this.formBuilder.group({
-      name:name,
-      description:description,
-      index:index
-    }) 
+      name: name,
+      description: description,
+      index: index
+    })
     spells.push(formGroup);
   }
+
+  private async getChapters() {
+    let passedIndex = this.route.snapshot.params['index'];
+    console.log(passedIndex);
+    if (this.new) {
+      await this.historyService.getChapter(passedIndex - 1).then(chapter => {
+        this.selectedChapter = <Chapter>chapter;
+      });
+    }
+    else {
+
+      if (passedIndex > 0) {
+        await this.historyService.getChapter(passedIndex - 1).then(chapter => this.previousChapter = <Chapter>chapter)
+      }
+      await this.historyService.getChapter(passedIndex).then(chapter => { this.selectedChapter = <Chapter>chapter; });
+    }
+    return;
+  }
+
 
   onTabSwitch(tabName: string) {
     for (let tab in this.tabs) {
       this.tabs[tab] = (tab === tabName ? !this.tabs[tabName] : false);
     }
   }
-  
+
   onSubmit() {
     const newChapter: Chapter = this.chapterForm.value;
     console.log(this.chapterForm);

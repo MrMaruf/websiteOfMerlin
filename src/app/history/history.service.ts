@@ -48,13 +48,20 @@ export class HistoryService {
     return this.chapters;
   }
 
-  getChapter(index: number) {
-    if (this.chapters[index]) {
-      return this.chapters[index];
+  async getChapter(index: number) {
+    
+    if (this.chapters.length > 0) {
+      if (this.chapters[index]) {
+        return this.chapters[index];
+      }
     }
-    // else {
-    //   return this.firebaseService.getItemAt('/chapters/' + index)
-    // }
+    else{
+      const chapter = await <Promise<Chapter>>this.requestChapter(index);
+      return chapter;
+    }
+  }
+  requestChapter(index: number) {
+    return this.firebaseService.getItemAt('/chapters/' + index);
   }
 
   // getChapterById(id: number) {

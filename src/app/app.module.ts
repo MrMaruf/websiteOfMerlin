@@ -29,7 +29,6 @@ import { HistoryComponent } from './history/history.component';
 import { SearchPipe } from './shared/search.pipe';
 import { HistoryService } from './history/history.service';
 import { ChapterComponent } from './history/chapter/chapter.component';
-import { ChapterResolver } from './history/chapter/chapter-resolver.service';
 import { SkillComponent } from './history/chapter/skill/skill.component';
 import { AbilityComponent } from './history/chapter/ability/ability.component';
 import { SavesComponent } from './history/chapter/saves/saves.component';
@@ -76,7 +75,6 @@ Sub-components imports end
   providers: [
     FirebaseService,
     HistoryService,
-    ChapterResolver,
     
   ],
   bootstrap: [AppComponent]

@@ -10,7 +10,6 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
 import { HistoryComponent } from './history/history.component';
 import { ChapterComponent } from './history/chapter/chapter.component';
-import { ChapterResolver } from './history/chapter/chapter-resolver.service';
 
 /*
 Sub-components imports end
@@ -34,11 +33,11 @@ const routes: Routes = [
 
     ]
   },
-  { path: 'chapter/:index', component: ChapterComponent, resolve: {chapters: ChapterResolver}},
-  { path: 'chapter/ability/:index', component: ChapterComponent, resolve: {chapters: ChapterResolver}},
-  { path: 'skill/:index', component: ChapterComponent, resolve: {chapters: ChapterResolver}},
-  { path: 'spells/:index', component: ChapterComponent, resolve: {chapters: ChapterResolver}},
-  { path: 'chapter/saves', component: ChapterComponent, resolve: {chapters: ChapterResolver}},
+  { path: 'chapter/:index', component: ChapterComponent},
+  { path: 'chapter/ability/:index', component: ChapterComponent},
+  { path: 'skill/:index', component: ChapterComponent},
+  { path: 'spells/:index', component: ChapterComponent},
+  { path: 'chapter/saves', component: ChapterComponent},
   // {
   //   path: 'register', component: SignUpComponent, children: [
   //     {path: 'weak-password', component: MessagePageComponent, data: {message: 'Password should be at least 6 characters'}},

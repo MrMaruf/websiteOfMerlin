@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public authorised = false;
   public author = false;
   activeClass = "active";
+  currentRoute;
   progressIndex = 43;
   private subscription: Subscription;
 
@@ -26,7 +27,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private authService: AuthService,
     private firebaseService: FirebaseService,
-    private historyService: HistoryService) {
+    private historyService: HistoryService,
+    private router:Router) {
+      router.events.pipe(
+        filter(event => event instanceof NavigationEnd)  
+      ).subscribe((event: NavigationEnd) => {
+        this.currentRoute= router.url;
+      });
   }
 
 
