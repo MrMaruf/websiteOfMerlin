@@ -71,8 +71,15 @@
             [class.disabled]="selectedChapter.abilities.length < 1 " (click)="onTabSwitch('abilities')">Abilities</a>
         <a class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['spells']"
             [class.disabled]="selectedChapter.spells.length < 1 " (click)="onTabSwitch('spells')">Spells</a>
-        <a class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['saves']"
+        <span [ngSwitch]="showSaves">
+            <a *ngSwitchCase="true" class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['saves']"
             (click)="onTabSwitch('saves')">Saves</a>
+            <a *ngSwitchCase="false" class="flex-sm-fill text-sm-center nav-link" [class.active]="tabs['saves']"
+            (click)="onTabSwitch('animagus')">Animagus Form</a>
+        <!-- <p *ngSwitchDefault>
+        
+        </p> -->
+        </span>
     </nav>
     <form [formGroup]="chapterForm" class="m-5">
 

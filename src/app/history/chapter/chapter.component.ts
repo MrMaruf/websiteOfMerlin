@@ -25,6 +25,8 @@ export class ChapterComponent implements OnInit {
   chapterIndex: number;
   chapterForm: FormGroup;
   new: boolean = false;
+  showSaves: boolean = true;
+  
   complexities = [
     "Extremely Simple",
     "Simple",
@@ -39,7 +41,8 @@ export class ChapterComponent implements OnInit {
     'skills': false,
     'abilities': false,
     'saves': false,
-    'spells': false
+    'spells': false,
+    'animagus':false
   };
   isAuthor: boolean;
 
@@ -132,8 +135,10 @@ export class ChapterComponent implements OnInit {
         this.updateFormSpell(spell);
       }
     }
-    for (let save of saves) {
-      this.updateFormSave(save);
+    if (this.showSaves) {
+      for (let save of saves) {
+        this.updateFormSave(save);
+      }
     }
   }
 
