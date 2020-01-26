@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HistoryService } from './history/history.service';
 
 @Component({
@@ -10,14 +10,19 @@ import { HistoryService } from './history/history.service';
 })
 export class AppComponent implements OnInit {
   title = 'websiteOfMerlin';
-  constructor(private historyService: HistoryService, private authService: AuthService, private router: Router){
+  constructor(
+    private historyService: HistoryService, 
+    private authService: AuthService, 
+    private router: Router,
+    private route: ActivatedRoute){
     
   }
   ngOnInit(){
-    if(!this.authService.getAuthState()['authorised'])
-    {
-      this.router.navigate(['/'])
-    }
+    console.log(this.route);
+    // if(!this.authService.getAuthState()['authorised'])
+    // {
+    //   this.router.navigate(['/'])
+    // }
     this.historyService.getAllData();
     
   }
