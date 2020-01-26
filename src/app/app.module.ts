@@ -36,6 +36,8 @@ import { SpellComponent } from './history/chapter/spell/spell.component';
 import { FooterComponent } from './footer/footer.component';
 import { FirebaseService } from './shared/firebase.service';
 import { SkillsComponent } from './history/chapter/skills/skills.component';
+import { UneditedComponent } from './unedited/unedited.component';
+import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
 
 /*
 Sub-components imports end
@@ -59,6 +61,8 @@ Sub-components imports end
     SpellComponent,
     FooterComponent,
     SkillsComponent,
+    UneditedComponent,
+    CreateUneditedComponent,
 
   ],
   imports: [

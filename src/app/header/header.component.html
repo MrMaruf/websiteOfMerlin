@@ -21,6 +21,9 @@
                 <li class="nav-item dropdown" [class.active]="currentRoute.includes('progress')">
                     <a class="nav-link" aria-disabled="true" tabindex="-1" [routerLink]="['/chapter', progressIndex]">Progress</a>
                 </li>
+                <!-- <li class="nav-item dropdown" [class.active]="currentRoute.includes('progress')">
+                    <a class="nav-link" aria-disabled="true" tabindex="-1" [routerLink]="unedited">Unedited Chapters</a>
+                </li> -->
                 <li class="nav-item dropdown" [class.active]="currentRoute.includes('log')">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -33,6 +36,7 @@
                         <div class="dropdown-divider"></div> -->
                         </span>
                         <span *ngIf="authorised">
+                            <a class="dropdown-item" [routerLink]="['/unedited', 'new']">Create Unedited chapter</a>
                             <a class="dropdown-item" (click)="onLogout()">Logout</a>
                             <a class="dropdown-item" (click)="onRefreshToken()">Refresh Credentials</a>
                         </span>
@@ -42,22 +46,6 @@
                 <a class="nav-link" href="#">Log In</a>
             </li> -->
             </ul>
-            <div class="btn-group dropdown float-right-lg float-md-left">
-                <button type="button" class="btn btn-info dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    Author
-                </button>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <span *ngIf="!authorised">
-                        <a class="dropdown-item" routerLink="login">Login</a>
-                        <!-- <a class="dropdown-item" routerLink="register">Register</a> -->
-                    </span>
-                    <span *ngIf="authorised">
-                        <a class="dropdown-item" (click)="onLogout()">Logout</a>
-                        <a class="dropdown-item" (click)="onRefreshToken()">Refresh Credentials</a>
-                    </span>
-                </div>
-            </div>
         </div>
     </nav>
 </header>

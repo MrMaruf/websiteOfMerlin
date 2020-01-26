@@ -10,6 +10,8 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
 import { HistoryComponent } from './history/history.component';
 import { ChapterComponent } from './history/chapter/chapter.component';
+import { UneditedComponent } from './unedited/unedited.component';
+import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
 
 /*
 Sub-components imports end
@@ -33,6 +35,8 @@ const routes: Routes = [
 
     ]
   },
+  { path: 'unedited/new', component: CreateUneditedComponent},
+  { path: 'unedited/:index', component: UneditedComponent},
   { path: 'chapter/:index', component: ChapterComponent},
   { path: 'chapter/ability/:index', component: ChapterComponent},
   { path: 'skill/:index', component: ChapterComponent},
