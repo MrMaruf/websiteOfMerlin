@@ -1,108 +1,82 @@
 import { ThrowStmt } from '@angular/compiler';
+import { Stat } from './stat.model';
+import { StatType } from './enums';
+import { Modifier } from './modifier.model';
 
-export class Skill {
-    private _name: string;
-    private _description: string;
+export class Skill extends Stat {
     private _level: number;
-    private _history: string;
+    private _modifiers: Modifier[];
+    private _history: number[];
     private _changed: boolean = false;
 
     //constructors
 
-	constructor(name: string, description: string, level: number, history: string, changed: boolean) {
-		this._name = name;
-		this._description = description;
-		this._level = level;
-		this._history = history;
-		this._changed = changed;
-	}
+    constructor(name: string, description: string, level: number = 0, history: number[] = [], modifiers:Modifier[] = [], changed: boolean = false) {
+        super(name, description, StatType['skill']);
+        this._level = level;
+        this._modifiers = modifiers
+        this._history = history;
+        this._changed = changed;
+    }
 
     //methods
     changeLevel(newLevel: number) {
         this._level = newLevel;
-        this._history += " -> " + this._level;
-        this._changed = true;
+        this._history.push(newLevel);
     }
 
-    /**
-     * Getter name
-     * @return {string}
-     */
-	public get name(): string {
-		return this._name;
-	}
-
-    /**
-     * Setter name
-     * @param {string} value
-     */
-	public set name(value: string) {
-		this._name = value;
-	}
-
-    /**
-     * Getter description
-     * @return {string}
-     */
-	public get description(): string {
-		return this._description;
-	}
-
-    /**
-     * Setter description
-     * @param {string} value
-     */
-	public set description(value: string) {
-		this._description = value;
-	}
+    public getHistory(): string {
+        let msg: string = "";
+        let previousValue;
+        for (let value of this._history) {
+            if (previousValue)
+                msg += (previousValue < value ? " ➔+ " + value : " ➔- " + value)
+            else
+                msg += value;
+            previousValue = value;
+        }
+        return msg;
+    }
 
     /**
      * Getter level
      * @return {number}
      */
-	public get level(): number {
-		return this._level;
-	}
+    public get level(): number {
+        return this._level;
+    }
 
     /**
      * Setter level
      * @param {number} value
      */
-	public set level(value: number) {
+    public set level(value: number) {
         this.changeLevel(value)
-		// this._level = value;
-	}
+        // this._level = value;
+    }
 
     /**
      * Getter history
      * @return {string}
      */
-	public get history(): string {
-		return this._history;
-	}
-
-    /**
-     * Setter history
-     * @param {string} value
-     */
-	public set history(value: string) {
-		this._history = value;
-	}
+    public get history(): number[] {
+        return this._history;
+    }
 
     /**
      * Getter changed
      * @return {boolean}
      */
-	public get changed(): boolean {
-		return this._changed;
-	}
+    public get changed(): boolean {
+        return this._changed;
+    }
 
     /**
      * Setter changed
      * @param {boolean} value
      */
-	public set changed(value: boolean) {
-		this._changed = value;
-	}
-    
+    public set changed(value: boolean) {
+        this._changed = value;
+    }
+
 }

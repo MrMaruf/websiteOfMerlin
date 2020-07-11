@@ -1,21 +1,19 @@
+import { Characteristic } from './characteristic.model';
+import { Stat } from './stat.model';
+
 export class Character {
-    private _age: number;
-    private _level: number;
-    private _health: number;
-    private _stamina: number;
-    private _magicka: number;
-    private _magickaModifier: number;
+    private _originName: string;
     private _name: string;
-    private _numSkillPoints: number;
-    private readonly _talentInnate: number = 1;
-    private _talent: number;
-    private _talentCalculated: number;
+    private _level:number;
+    private _stats: Stat[];
 
     constructor(age: number, level: number, health: number, stamina: number, magicka: number, magickaModifier: number, name: string, numSkillPoints: number, talent: number, talentCalculated: number) {
+        this._stats['health'] = health;
+        this._stats.push(characteristics);
         this._age = age;
         this._level = level;
         this._health = health;
-        this._stamina = stamina;
+        this._stats['stamin'] = stamina;
         this._magicka = magicka;
         this._magickaModifier = magickaModifier;
         this._name = name;
@@ -98,27 +96,11 @@ export class Character {
     }
 
     /**
-     * Getter magickaModifier
-     * @return {number}
-     */
-    public get magickaModifier(): number {
-        return this._magickaModifier;
-    }
-
-    /**
-     * Setter magickaModifier
-     * @param {number} value
-     */
-    public set magickaModifier(value: number) {
-        this._magickaModifier = value;
-    }
-
-    /**
      * Getter magicka
      * @return {number}
      */
     public get magicka(): number {
-        return this._magicka;
+        return this._stats['magicka'];
     }
 
     /**
@@ -126,7 +108,7 @@ export class Character {
      * @param {number} value
      */
     public set magicka(value: number) {
-        this._magicka = value;
+        this._stats['magicka'] = value;
     }
 
     /**
@@ -134,7 +116,7 @@ export class Character {
      * @return {number}
      */
     public get health(): number {
-        return this._health;
+        return this._stats['health'];
     }
 
     /**
@@ -142,7 +124,7 @@ export class Character {
      * @param {number} value
      */
     public set health(value: number) {
-        this._health = value;
+        this._stats['health'] = value;
     }
 
     /**
@@ -150,7 +132,7 @@ export class Character {
      * @return {number}
      */
     public get stamina(): number {
-        return this._stamina;
+        return this._stats['stamin'];
     }
 
     /**
@@ -158,7 +140,7 @@ export class Character {
      * @param {number} value
      */
     public set stamina(value: number) {
-        this._stamina = value;
+        this._stats['stamin'] = value;
     }
 
     /**

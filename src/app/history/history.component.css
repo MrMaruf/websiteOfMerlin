@@ -1,0 +1,12 @@
+/* table{
+    border: black 3px ridge;
+    border-radius: 5px !important;
+} */
+thead{
+    border: 3px solid;
+    border-radius: 5px;
+}
+div.table.tr.th{
+    border-right: black 3px solid !important;
+    border-bottom: black 3px solid !important;
+}
