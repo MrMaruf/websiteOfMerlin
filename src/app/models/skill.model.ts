@@ -11,8 +11,8 @@ export class Skill extends Stat {
 
     //constructors
 
-    constructor(name: string, description: string, level: number = 0, history: number[] = [], modifiers:Modifier[] = [], changed: boolean = false) {
-        super(name, description, StatType['skill']);
+    constructor(name: string = "", description: string = "", level: number = 0, history: number[] = [], modifiers:Modifier[] = [], changed: boolean = false) {
+        super(StatType['skill'], name, description);
         this._level = level;
         this._modifiers = modifiers
         this._history = history;

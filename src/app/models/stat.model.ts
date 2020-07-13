@@ -6,12 +6,11 @@ export class Stat{
     private _type: StatType;
 
 
-	constructor(name:string, description:string, type:StatType | string | number) {
+	constructor( type:StatType | string | number, name:string = "", description:string = "") {
         this._name = name;
         this._description = description;
         this._type = StatType[type];
 	}
-
     /**
      * Getter name
      * @return {string}

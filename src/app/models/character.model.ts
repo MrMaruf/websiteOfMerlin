@@ -1,178 +1,123 @@
 import { Characteristic } from './characteristic.model';
 import { Stat } from './stat.model';
+import { StatType } from './enums';
+import { Progression } from './progression.model';
+import { Skill } from './skill.model';
 
 export class Character {
     private _originName: string;
     private _name: string;
-    private _level:number;
-    private _stats: Stat[];
+    private _progression: Progression;
+    private _age: number;
+    private _stats: Map<string, Stat> = new Map();
 
-    constructor(age: number, level: number, health: number, stamina: number, magicka: number, magickaModifier: number, name: string, numSkillPoints: number, talent: number, talentCalculated: number) {
-        this._stats['health'] = health;
-        this._stats.push(characteristics);
+    constructor(age: number, progression: Progression, name: string, stats:Map<string, Stat>, originName:string = "Magnus") {
+        
         this._age = age;
-        this._level = level;
-        this._health = health;
-        this._stats['stamin'] = stamina;
-        this._magicka = magicka;
-        this._magickaModifier = magickaModifier;
+        this._progression = progression;
         this._name = name;
-        this._numSkillPoints = numSkillPoints;
-        this._talent = talent;
-        this._talentCalculated = talentCalculated;
-    }
+        this._originName = originName;
 
-    calculateTalent(newTalentModifier:number) {
-        this._talent = this._talentInnate + (1 * newTalentModifier);
-        this._talentCalculated = this._talent * (1 + (this._magicka * this._magickaModifier));
     }
+    setUpStat(type:StatType|string|number): Stat{
+        let newStat;
 
-    setCharacter() {
-        this._magickaModifier = (1 * Math.pow(5, Math.abs(this._level / 15))) / 100
+        switch(type)
+        {
+            case StatType['characteristic']:
+                newStat = new Characteristic();
+                break;
+            case StatType['skill']:
+                newStat = new Skill()
+                break;
+            case StatType['effect']:
+                newStat = new Stat(type);
+        }
+        
+        return newStat;
     }
-
-    /**
-     * Getter talentCalculated
-     * @return {number}
-     */
-    public get talentCalculated(): number {
-        return this._talentCalculated;
-    }
-
-    /**
-     * Setter talentCalculated
-     * @param {number} value
-     */
-    public set talentCalculated(value: number) {
-        this._talentCalculated = value;
+    addStat(newStat:Stat): void{
+        this._stats.set(newStat.name, newStat);
     }
 
     /**
-     * Getter talent
-     * @return {number}
+     * Getter originName
+     * @return {string}
      */
-    public get talent(): number {
-        return this._talent;
-    }
-
-    /**
-     * Setter talent
-     * @param {number} value
-     */
-    public set talent(value: number) {
-        this._talent = value;
-    }
-
-    /**
-     * Getter numSkillPoints
-     * @return {number}
-     */
-    public get numSkillPoints(): number {
-        return this._numSkillPoints;
-    }
-
-    /**
-     * Setter numSkillPoints
-     * @param {number} value
-     */
-    public set numSkillPoints(value: number) {
-        this._numSkillPoints = value;
-    }
+	public get originName(): string {
+		return this._originName;
+	}
 
     /**
      * Getter name
      * @return {string}
      */
-    public get name(): string {
-        return this._name;
-    }
+	public get name(): string {
+		return this._name;
+	}
 
     /**
-     * Setter name
-     * @param {string} value
+     * Getter progression
+     * @return {Progression}
      */
-    public set name(value: string) {
-        this._name = value;
-    }
-
-    /**
-     * Getter magicka
-     * @return {number}
-     */
-    public get magicka(): number {
-        return this._stats['magicka'];
-    }
-
-    /**
-     * Setter magicka
-     * @param {number} value
-     */
-    public set magicka(value: number) {
-        this._stats['magicka'] = value;
-    }
-
-    /**
-     * Getter health
-     * @return {number}
-     */
-    public get health(): number {
-        return this._stats['health'];
-    }
-
-    /**
-     * Setter health
-     * @param {number} value
-     */
-    public set health(value: number) {
-        this._stats['health'] = value;
-    }
-
-    /**
-     * Getter stamina
-     * @return {number}
-     */
-    public get stamina(): number {
-        return this._stats['stamin'];
-    }
-
-    /**
-     * Setter stamina
-     * @param {number} value
-     */
-    public set stamina(value: number) {
-        this._stats['stamin'] = value;
-    }
-
-    /**
-     * Getter level
-     * @return {number}
-     */
-    public get level(): number {
-        return this._level;
-    }
-
-    /**
-     * Setter level
-     * @param {number} value
-     */
-    public set level(value: number) {
-        this._level = value;
-    }
+	public get progression(): Progression {
+		return this._progression;
+	}
 
     /**
      * Getter age
      * @return {number}
      */
-    public get age(): number {
-        return this._age;
-    }
+	public get age(): number {
+		return this._age;
+	}
+
+    /**
+     * Getter stats
+     * @return {Map<string, Stat> }
+     */
+	public get stats(): Map<string, Stat>  {
+		return this._stats;
+	}
+
+    /**
+     * Setter originName
+     * @param {string} value
+     */
+	public set originName(value: string) {
+		this._originName = value;
+	}
+
+    /**
+     * Setter name
+     * @param {string} value
+     */
+	public set name(value: string) {
+		this._name = value;
+	}
+
+    /**
+     * Setter progression
+     * @param {Progression} value
+     */
+	public set progression(value: Progression) {
+		this._progression = value;
+	}
 
     /**
      * Setter age
      * @param {number} value
      */
-    public set age(value: number) {
-        this._age = value;
-    }
+	public set age(value: number) {
+		this._age = value;
+	}
+
+    /**
+     * Setter stats
+     * @param {Map<string, Stat> } value
+     */
+	public set stats(value: Map<string, Stat> ) {
+		this._stats = value;
+	}
 
 }
