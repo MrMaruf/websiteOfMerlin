@@ -12,8 +12,9 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 export class CharacterComponent implements OnInit {
   character: Character;
   characterForm: FormGroup;
-  controls: {key:string, value:FormControl}[];
-  groups: {key:string, value:FormGroup}[];
+  controls: { key: string, value: FormControl }[];
+  groups: { key: string, value: FormGroup }[];
+  arrays: { key: string, value: FormArray }[];
   constructor() {
     this.character = new Character();
     this.controls = [];
@@ -45,8 +46,10 @@ export class CharacterComponent implements OnInit {
       if (!["string", "number"].includes(typeof input[fieldName])) {
 
         // console.log(input[fieldName]);
-        if (input[fieldName] instanceof Map)
-          continue;
+        if (input[fieldName] instanceof Map) {
+          let newFormArray
+
+        }
         else {
           let newFormGroup: FormGroup = new FormGroup({});
           for (let internalFieldName in input[fieldName]) {
@@ -56,7 +59,7 @@ export class CharacterComponent implements OnInit {
             newFormGroup.addControl(internalFieldName, newControl);
           }
           this.characterForm.addControl(fieldName, newFormGroup);
-          this.groups.push({key: fieldName, value: newFormGroup});
+          this.groups.push({ key: fieldName, value: newFormGroup });
         }
         // this.characterForm.get(variable).disable();
         continue;
@@ -64,7 +67,7 @@ export class CharacterComponent implements OnInit {
 
       let newControl = new FormControl(input[fieldName]);
       this.characterForm.addControl(fieldName, newControl);
-      this.controls.push({key:fieldName, value:newControl});
+      this.controls.push({ key: fieldName, value: newControl });
     }
     //   'name': new FormControl(name, Validators.required),
     //   'number': new FormControl(number, Validators.required),
