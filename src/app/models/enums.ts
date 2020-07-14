@@ -6,3 +6,4 @@ export enum StatType{
     "effect",
     "other"
 }
+export enum Complexity{}

@@ -8,10 +8,10 @@ import { MessagePageComponent } from './message-page/message-page.component'
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
-import { HistoryComponent } from './history/history.component';
-import { ChapterComponent } from './history/chapter/chapter.component';
-import { UneditedComponent } from './unedited/unedited.component';
-import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
+// import { HistoryComponent } from './history/history.component';
+// import { ChapterComponent } from './history/chapter/chapter.component';
+// import { UneditedComponent } from './unedited/unedited.component';
+// import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
 
 /*
 Sub-components imports end
@@ -28,20 +28,20 @@ const routes: Routes = [
   },
   { path: 'information', redirectTo: '' },
   { path: 'about', component: AboutComponent },
-  {
-    path: 'history', component: HistoryComponent, children: [
-      { path: '', component: MessagePageComponent },
+  // {
+  //   path: 'history', component: HistoryComponent, children: [
+  //     { path: '', component: MessagePageComponent },
       
 
-    ]
-  },
-  { path: 'unedited/new', component: CreateUneditedComponent},
-  { path: 'unedited/:index', component: UneditedComponent},
-  { path: 'chapter/:index', component: ChapterComponent},
-  { path: 'chapter/ability/:index', component: ChapterComponent},
-  { path: 'skill/:index', component: ChapterComponent},
-  { path: 'spells/:index', component: ChapterComponent},
-  { path: 'chapter/saves', component: ChapterComponent},
+  //   ]
+  // },
+  // { path: 'unedited/new', component: CreateUneditedComponent},
+  // { path: 'unedited/:index', component: UneditedComponent},
+  // { path: 'chapter/:index', component: ChapterComponent},
+  // { path: 'chapter/ability/:index', component: ChapterComponent},
+  // { path: 'skill/:index', component: ChapterComponent},
+  // { path: 'spells/:index', component: ChapterComponent},
+  // { path: 'chapter/saves', component: ChapterComponent},
   // {
   //   path: 'register', component: SignUpComponent, children: [
   //     {path: 'weak-password', component: MessagePageComponent, data: {message: 'Password should be at least 6 characters'}},

@@ -4,7 +4,6 @@ import { StatType } from './enums';
 import { Modifier } from './modifier.model';
 
 export class Skill extends Stat {
-    private _level: number;
     private _modifiers: Modifier[];
     private _history: number[];
     private _changed: boolean = false;
@@ -12,8 +11,7 @@ export class Skill extends Stat {
     //constructors
 
     constructor(name: string = "", description: string = "", level: number = 0, history: number[] = [], modifiers:Modifier[] = [], changed: boolean = false) {
-        super(StatType['skill'], name, description);
-        this._level = level;
+        super(StatType['skill'], name, description, level);
         this._modifiers = modifiers
         this._history = history;
         this._changed = changed;
@@ -21,7 +19,7 @@ export class Skill extends Stat {
 
     //methods
     changeLevel(newLevel: number) {
-        this._level = newLevel;
+        this.level = newLevel;
         this._history.push(newLevel);
     }
 
@@ -38,13 +36,13 @@ export class Skill extends Stat {
         return msg;
     }
 
-    /**
-     * Getter level
-     * @return {number}
-     */
-    public get level(): number {
-        return this._level;
-    }
+    // /**
+    //  * Getter level
+    //  * @return {number}
+    //  */
+    // public get level(): number {
+    //     return this._level;
+    // }
 
     /**
      * Setter level

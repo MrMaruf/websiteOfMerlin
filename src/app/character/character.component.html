@@ -1,0 +1,30 @@
+<input *ngFor="let variable of character| keyvalue" [(ngModel)]="character[variable.key]">
+<hr>
+<form [formGroup]="characterForm" (ngSubmit)="onSubmit()">
+    <h2>Character</h2>
+    <div class="form-row">
+        <div class="form-group col-md-2" *ngFor="let variable of controls">
+            <label for="name">Character{{variable.key}}</label>
+            <input formControlName="{{variable.key}}" type="text" class="form-control" id="Chapter{{variable.key}}"
+                placeholder="{{variable.key}}">
+        </div>
+    </div>
+    <span *ngFor="let group of groups">
+        <div class="form-group " [formGroupName]="group.key">
+            <h3>Character{{group.key}}</h3>
+            <div class="form-group col-1" *ngFor="let variable of group.value.controls | keyvalue">
+                <label for="name">{{group.key + variable.key}}</label>
+                <input formControlName="{{variable.key}}" type="text" class="form-control" id="chapterName"
+                    placeholder="{{variable.key}}">
+            </div>
+        </div>
+    </span>
+    <!-- <div class="form-group" *ngIf="checkControl(variable)">
+            <label for="name">Character{{variable.key}}</label>
+            <input formControlName="{{variable.key}}" type="text" class="form-control" id="chapterName"
+                placeholder="{{variable.key}}">
+        </div> -->
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<hr>
+<button class="btn btn-primary" (click)="saveCharacter()">Save Character</button>

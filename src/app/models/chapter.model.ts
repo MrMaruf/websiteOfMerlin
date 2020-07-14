@@ -27,11 +27,11 @@ export class Chapter {
     }
 
     setChapter() {
-        this.character.setCharacter();
+        // this.character.setCharacter();
         let talentModifier = 0
         if (this._number > 34)
             talentModifier = 0.45
-        this.character.calculateTalent(talentModifier);
+        // this.character.calculateTalent(talentModifier);
         
     }
     /**

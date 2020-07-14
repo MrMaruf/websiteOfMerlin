@@ -7,7 +7,7 @@ export class Progression {
     private _characterPoints: number;
     private _skillPoints: number;
 
-    constructor(level: number, growthCP: number, CP: number, growthSP: number = 0, SP: number = 0) {
+    constructor(level: number = -1, growthCP: number = -1, CP: number = -1, growthSP: number = -1, SP: number = -1) {
         this._level = level;
         this._growthCharacterPoints = growthCP;
         this._growthSkillPoints = growthSP;

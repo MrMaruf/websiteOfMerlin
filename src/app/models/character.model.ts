@@ -11,10 +11,10 @@ export class Character {
     private _age: number;
     private _stats: Map<string, Stat> = new Map();
 
-    constructor(age: number, progression: Progression, name: string, stats:Map<string, Stat>, originName:string = "Magnus") {
+    constructor(age: number = -1, progression: Progression = null, name: string = "", stats:Map<string, Stat> = new Map(), originName:string = "Magnus") {
         
         this._age = age;
-        this._progression = progression;
+        this._progression = progression ? progression : new Progression();
         this._name = name;
         this._originName = originName;
 

@@ -4,13 +4,39 @@ export class Stat{
     private _name:string;
     private _description:string;
     private _type: StatType;
+    private _level: number;
 
 
-	constructor( type:StatType | string | number, name:string = "", description:string = "") {
+	constructor( type:StatType | string | number, name:string = "", description:string = "", level = 0) {
         this._name = name;
         this._description = description;
         this._type = StatType[type];
+    }
+
+    /**
+     * Getter level
+     * @return {number}
+     */
+	public get level(): number {
+		return this._level;
 	}
+
+    /**
+     * Setter type
+     * @param {StatType} value
+     */
+	public set type(value: StatType) {
+		this._type = value;
+	}
+
+    /**
+     * Setter level
+     * @param {number} value
+     */
+	public set level(value: number) {
+		this._level = value;
+	}
+    
     /**
      * Getter name
      * @return {string}

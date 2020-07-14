@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 /*
 firebase imports
 */
+import { FirebaseService } from './shared/firebase.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -25,19 +26,20 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
 import { HeaderComponent } from './header/header.component';
-import { HistoryComponent } from './history/history.component';
-import { SearchPipe } from './shared/search.pipe';
-import { HistoryService } from './history/history.service';
-import { ChapterComponent } from './history/chapter/chapter.component';
-import { SkillComponent } from './history/chapter/skill/skill.component';
-import { AbilityComponent } from './history/chapter/ability/ability.component';
-import { SavesComponent } from './history/chapter/saves/saves.component';
-import { SpellComponent } from './history/chapter/spell/spell.component';
 import { FooterComponent } from './footer/footer.component';
-import { FirebaseService } from './shared/firebase.service';
-import { SkillsComponent } from './history/chapter/skills/skills.component';
-import { UneditedComponent } from './unedited/unedited.component';
-import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
+// import { HistoryComponent } from './history/history.component';
+// import { SearchPipe } from './shared/search.pipe';
+// import { HistoryService } from './history/history.service';
+// import { ChapterComponent } from './history/chapter/chapter.component';
+// import { SkillComponent } from './history/chapter/skill/skill.component';
+// import { AbilityComponent } from './history/chapter/ability/ability.component';
+// import { SavesComponent } from './history/chapter/saves/saves.component';
+// import { SkillsComponent } from './history/chapter/skills/skills.component';
+// import { SpellComponent } from './history/chapter/spell/spell.component';
+// import { UneditedComponent } from './unedited/unedited.component';
+// import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
+import { CharacterComponent } from './character/character.component';
+import { FormCleanNamePipe } from './shared/form-clean-name.pipe';
 
 /*
 Sub-components imports end
@@ -47,22 +49,24 @@ Sub-components imports end
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPipe,
+    // SearchPipe,
     MessagePageComponent,
     SignInComponent,
     SignUpComponent,
     AboutComponent,
     HeaderComponent,
-    HistoryComponent,
-    ChapterComponent,
-    SkillComponent,
-    AbilityComponent,
-    SavesComponent,
-    SpellComponent,
+    // HistoryComponent,
+    // ChapterComponent,
+    // SkillComponent,
+    // AbilityComponent,
+    // SavesComponent,
+    // SpellComponent,
     FooterComponent,
-    SkillsComponent,
-    UneditedComponent,
-    CreateUneditedComponent,
+    // SkillsComponent,
+    // UneditedComponent,
+    // CreateUneditedComponent,
+    CharacterComponent,
+    FormCleanNamePipe,
 
   ],
   imports: [
@@ -78,7 +82,7 @@ Sub-components imports end
   ],
   providers: [
     FirebaseService,
-    HistoryService,
+    // HistoryService,
     
   ],
   bootstrap: [AppComponent]
