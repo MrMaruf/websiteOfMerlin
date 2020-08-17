@@ -29,17 +29,17 @@ export class HistoryService {
     // let token = this..getToken();
   }
   setChapters(newChapters: Chapter[]) {
-    for (const chapter of newChapters) {
-      if (!chapter.skills) {
-        chapter.skills = [];
-      }
-      if (!chapter.abilities) {
-        chapter.abilities = [];
-      }
-      if (!chapter.spells) {
-        chapter.spells = [];
-      }
-    }
+    // for (const chapter of newChapters) {
+    //   if (!chapter.skills) {
+    //     chapter.skills = [];
+    //   }
+    //   if (!chapter.abilities) {
+    //     chapter.abilities = [];
+    //   }
+    //   if (!chapter.spells) {
+    //     chapter.spells = [];
+    //   }
+    // }
     this.chapters = newChapters.slice();
     this.chaptersChanged.next(this.chapters.slice());
   }
@@ -81,12 +81,12 @@ export class HistoryService {
   // }
 
   addChapter(chapter: Chapter) {
-    if (!chapter.skills) {
-      chapter.skills = [];
-    }
-    if (!chapter.abilities) {
-      chapter.abilities = [];
-    }
+    // if (!chapter.skills) {
+    //   chapter.skills = [];
+    // }
+    // if (!chapter.abilities) {
+    //   chapter.abilities = [];
+    // }
     this.chapters.push(chapter);
     this.chaptersChanged.next(this.chapters.slice());
   }
