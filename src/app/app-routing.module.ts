@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 /*
 Sub-components imports start
 */
+import { AuthGuardService as AuthGuard } from './guard/auth-guard.service';
 import { MessagePageComponent } from './message-page/message-page.component'
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
@@ -27,7 +28,7 @@ const routes: Routes = [
     data: { message:  homeMessage }
   },
   { path: 'information', redirectTo: '' },
-  { path: 'about', component: AboutComponent },
+  { path: 'about', canActivate:[AuthGuard], component: AboutComponent },
   // {
   //   path: 'history', component: HistoryComponent, children: [
   //     { path: '', component: MessagePageComponent },

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /*
 firebase imports
@@ -40,6 +40,9 @@ import { FooterComponent } from './footer/footer.component';
 // import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
 import { CharacterComponent } from './character/character.component';
 import { FormCleanNamePipe } from './shared/form-clean-name.pipe';
+import { KeycloakService } from './auth/keycloak.service';
+import { AuthGuardService } from './guard/auth-guard.service';
+import { SecuredHttpInterceptor } from './intereceptor/secured-http.service';
 
 /*
 Sub-components imports end
@@ -82,6 +85,13 @@ Sub-components imports end
   ],
   providers: [
     FirebaseService,
+    KeycloakService,
+        AuthGuardService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: SecuredHttpInterceptor,
+            multi: true
+        },
     // HistoryService,
     
   ],
