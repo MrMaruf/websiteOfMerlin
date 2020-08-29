@@ -7,22 +7,70 @@ import { PermissionGuard } from '../models/permission-guard.model';
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {
 
-    constructor( public router: Router, private keycloakService: KeycloakService ) {
+    constructor(public router: Router, private keycloakService: KeycloakService) {
     }
 
-    canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        // console.log(route.data)
+        // console.log(KeycloakService.hasRole('Author'));
+        // console.log(KeycloakService.hasRole('User'));
+        // return true;
         let url: string = state.url;
-        return this.checkLogin( url );
+        if (this.checkLogin(url)) {
+            let data = route.data["Permission"] as PermissionGuard;
+            console.log(data.Role);
+            if (data.Role) {
+                let hasDefined = KeycloakService.hasRole(data.Role)
+                if (hasDefined)
+                    return true;
+
+                if (data.RedirectTo && data.RedirectTo !== undefined)
+                    this.router.navigate([data.RedirectTo]);
+
+                return false;
+
+            } else {
+                console.log('unrole');
+
+                if (Array.isArray(data.Only) && Array.isArray(data.Except)) {
+                    throw "Can't use both 'Only' and 'Except' in route data.";
+                }
+
+                if (Array.isArray(data.Only)) {
+                    let hasDefined = KeycloakService.hasGroups(data.Only)
+                    if (hasDefined)
+                        return true;
+
+                    if (data.RedirectTo && data.RedirectTo !== undefined)
+                        this.router.navigate([data.RedirectTo]);
+
+                    return false;
+                }
+
+                if (Array.isArray(data.Except)) {
+                    let hasDefined = KeycloakService.hasGroups(data.Except)
+                    if (!hasDefined)
+                        return true;
+
+                    if (data.RedirectTo && data.RedirectTo !== undefined)
+                        this.router.navigate([data.RedirectTo]);
+
+                    return false;
+                }
+            }
+        }
+        else return false;
+
     }
 
     /**
      * Checks if a user is logged in before activating the secured page.
      * @param url
      */
-    checkLogin( url: string ): boolean {
-        if ( KeycloakService.auth.loggedIn && KeycloakService.auth.authz.authenticated ) {
+    checkLogin(url: string = ""): boolean {
+        if (KeycloakService.auth.loggedIn && KeycloakService.auth.authz.authenticated) {
             return true;
-            
+
         } else {
             KeycloakService.login();
             return false;
@@ -34,51 +82,52 @@ export class AuthGuardService implements CanActivate, CanLoad {
      * Note that currently keycloak is not sending the list of roles that's why we are using groups.
      * @param route The route
      */
-    canLoad( route: Route ): boolean {
-        if ( !( KeycloakService.auth.loggedIn && KeycloakService.auth.authz.authenticated ) ) {
+    canLoad(route: Route): boolean {
+        if (!(KeycloakService.auth.loggedIn && KeycloakService.auth.authz.authenticated)) {
             KeycloakService.login();
             return false;
         }
-
-        let data = route.data["Permission"] as PermissionGuard;
-        console.log( data.Role );
-        if ( data.Role ) {
-            let hasDefined = KeycloakService.hasRole( data.Role )
-            if ( hasDefined )
-                return true;
-
-            if ( data.RedirectTo && data.RedirectTo !== undefined )
-                this.router.navigate( [data.RedirectTo] );
-
-            return false;
-
-        } else {
-            console.log('unrole');
-
-            if ( Array.isArray( data.Only ) && Array.isArray( data.Except ) ) {
-                throw "Can't use both 'Only' and 'Except' in route data.";
-            }
-
-            if ( Array.isArray( data.Only ) ) {
-                let hasDefined = KeycloakService.hasGroups( data.Only )
-                if ( hasDefined )
+        if (this.checkLogin(url)) {
+            let data = route.data["Permission"] as PermissionGuard;
+            console.log(data.Role);
+            if (data.Role) {
+                let hasDefined = KeycloakService.hasRole(data.Role)
+                if (hasDefined)
                     return true;
 
-                if ( data.RedirectTo && data.RedirectTo !== undefined )
-                    this.router.navigate( [data.RedirectTo] );
+                if (data.RedirectTo && data.RedirectTo !== undefined)
+                    this.router.navigate([data.RedirectTo]);
 
                 return false;
-            }
 
-            if ( Array.isArray( data.Except ) ) {
-                let hasDefined = KeycloakService.hasGroups( data.Except )
-                if ( !hasDefined )
-                    return true;
+            } else {
+                console.log('unrole');
 
-                if ( data.RedirectTo && data.RedirectTo !== undefined )
-                    this.router.navigate( [data.RedirectTo] );
+                if (Array.isArray(data.Only) && Array.isArray(data.Except)) {
+                    throw "Can't use both 'Only' and 'Except' in route data.";
+                }
 
-                return false;
+                if (Array.isArray(data.Only)) {
+                    let hasDefined = KeycloakService.hasGroups(data.Only)
+                    if (hasDefined)
+                        return true;
+
+                    if (data.RedirectTo && data.RedirectTo !== undefined)
+                        this.router.navigate([data.RedirectTo]);
+
+                    return false;
+                }
+
+                if (Array.isArray(data.Except)) {
+                    let hasDefined = KeycloakService.hasGroups(data.Except)
+                    if (!hasDefined)
+                        return true;
+
+                    if (data.RedirectTo && data.RedirectTo !== undefined)
+                        this.router.navigate([data.RedirectTo]);
+
+                    return false;
+                }
             }
         }
     }
