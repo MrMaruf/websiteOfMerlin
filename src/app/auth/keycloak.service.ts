@@ -15,6 +15,7 @@ export class KeycloakService {
      */
     static init(): Promise<any> {
         let keycloakAuth: any = new Keycloak( 'assets/keycloak.json' );
+        console.log(keycloakAuth);
         KeycloakService.auth.loggedIn = false;
 
         return new Promise(( resolve, reject ) => {
@@ -72,8 +73,7 @@ export class KeycloakService {
      * Logout the current user
      */
     static logout() {
-        console.log( '*** LOGOUT' );
-        KeycloakService.auth.authz.logout( { redirectUri: KeycloakService.auth.logoutUrl } );
+        KeycloakService.auth.authz.logout( { redirectUri: environment.baseUrl } );
         KeycloakService.auth.loggedIn = false;
         KeycloakService.auth.authz = null;
     }
