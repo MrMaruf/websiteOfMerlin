@@ -6,6 +6,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HistoryService } from '../history/history.service';
 import { Subscription } from 'rxjs';
+import { KeycloakService } from '../auth/keycloak.service';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +37,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-
+  getKeycloakService(){
+    return KeycloakService;
+  }
   onFetchData() {
     this.historyService.getAllData();
   }
