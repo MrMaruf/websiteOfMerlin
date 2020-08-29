@@ -83,11 +83,11 @@ export class AuthGuardService implements CanActivate, CanLoad {
      * @param route The route
      */
     canLoad(route: Route): boolean {
-        if (!(KeycloakService.auth.loggedIn && KeycloakService.auth.authz.authenticated)) {
-            KeycloakService.login();
-            return false;
-        }
-        if (this.checkLogin(url)) {
+        // if (!(KeycloakService.auth.loggedIn && KeycloakService.auth.authz.authenticated)) {
+        //     KeycloakService.login();
+        //     return false;
+        // }
+        if (this.checkLogin()) {
             let data = route.data["Permission"] as PermissionGuard;
             console.log(data.Role);
             if (data.Role) {
@@ -130,6 +130,9 @@ export class AuthGuardService implements CanActivate, CanLoad {
                 }
             }
         }
+    }
+    checkPermissionGuard(permessionGuard: PermissionGuard) : string {
+        
     }
 
 }
