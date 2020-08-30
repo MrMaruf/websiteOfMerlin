@@ -10,6 +10,7 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
 import { PermissionGuard } from './models/permission-guard.model';
+import { AuthorComponent } from './author/author.component';
 // import { HistoryComponent } from './history/history.component';
 // import { ChapterComponent } from './history/chapter/chapter.component';
 // import { UneditedComponent } from './unedited/unedited.component';
@@ -34,12 +35,13 @@ const routes: Routes = [
       path: 'author', 
       canActivate: [AuthGuard],
       children: [
-        { path: '', component: MessagePageComponent },
+        { path: '', component: AuthorComponent },
         
       ],
       data : {
         Permission: {
-          Only: ['Author'],
+          Role: "Author",
+          // Only: ['Author'], okay, so for some reason groups don't work, will go back to roles
           RedirectTo: '403'
         } as PermissionGuard
       }
