@@ -40,7 +40,8 @@ export class KeycloakService {
      * @param groupName group name defined in keycloak
      */
     static hasGroup( groupName: string ): boolean {
-        return KeycloakService.auth.authz != null && KeycloakService.auth.authz.authenticated && KeycloakService.auth.authz.idTokenParsed.groups.indexOf( "/" + groupName ) !== -1 ? true : false;
+        return KeycloakService.auth.authz != null && KeycloakService.auth.authz.authenticated && KeycloakService.auth.authz.idTokenParsed.groups.indexOf( "/" + groupName ) !== -1 ? true : false; 
+        // doesn't work, groups are undentified, basically don't exist where they should.
     }
 
     /**
