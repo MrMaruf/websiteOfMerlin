@@ -3,11 +3,11 @@
 
 name: Merlin Website Workflow
 
-on:
-  push:
+on: push
+  # push:
       # branches-ignore:
       #   - master
-    branches: [ master ]
+    # branches: [ master ]
 
 jobs:
   firebase-deploy:
