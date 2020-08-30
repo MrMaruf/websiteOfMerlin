@@ -11,52 +11,15 @@ export class AuthGuardService implements CanActivate, CanLoad {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        // console.log(route.data)
-        // console.log(KeycloakService.hasRole('Author'));
-        // console.log(KeycloakService.hasRole('User'));
-        // return true;
         let url: string = state.url;
         if (this.checkLogin(url)) {
-            let data = route.data["Permission"] as PermissionGuard;
-            console.log(data.Role);
-            if (data.Role) {
-                let hasDefined = KeycloakService.hasRole(data.Role)
-                if (hasDefined)
+            let permissionGuard = route.data["Permission"] as PermissionGuard;
+            if (permissionGuard) {
+                let checkMarkers = this.checkPermissionGuard(permissionGuard);
+                if (this.checkAccess(checkMarkers, permissionGuard))
                     return true;
-
-                if (data.RedirectTo && data.RedirectTo !== undefined)
-                    this.router.navigate([data.RedirectTo]);
-
-                return false;
-
-            } else {
-                console.log('unrole');
-
-                if (Array.isArray(data.Only) && Array.isArray(data.Except)) {
-                    throw "Can't use both 'Only' and 'Except' in route data.";
-                }
-
-                if (Array.isArray(data.Only)) {
-                    let hasDefined = KeycloakService.hasGroups(data.Only)
-                    if (hasDefined)
-                        return true;
-
-                    if (data.RedirectTo && data.RedirectTo !== undefined)
-                        this.router.navigate([data.RedirectTo]);
-
-                    return false;
-                }
-
-                if (Array.isArray(data.Except)) {
-                    let hasDefined = KeycloakService.hasGroups(data.Except)
-                    if (!hasDefined)
-                        return true;
-
-                    if (data.RedirectTo && data.RedirectTo !== undefined)
-                        this.router.navigate([data.RedirectTo]);
-
-                    return false;
-                }
+                else
+                    this.router.navigate([permissionGuard.RedirectTo]);
             }
         }
         else return false;
@@ -129,10 +92,51 @@ export class AuthGuardService implements CanActivate, CanLoad {
                     return false;
                 }
             }
-        }
+        } else return false
     }
-    checkPermissionGuard(permessionGuard: PermissionGuard) : string {
-        
+
+    checkAccess(checkMarkers: string, permissionGuard: PermissionGuard): boolean {
+        let role = permissionGuard.Role;
+        let only = permissionGuard.Only;
+        let except = permissionGuard.Except;
+        let accessGranted: boolean;
+        checkMarkers.split("+").forEach(value => {
+            switch (value) {
+                case "role":
+                    accessGranted = KeycloakService.hasRole(role)
+                    break;
+                case "only":
+                    accessGranted = KeycloakService.hasGroups(only);
+                    break;
+                case "except":
+                    accessGranted = !KeycloakService.hasGroups(except);
+                    break;
+            };
+            if (!accessGranted)
+               return false;
+        })
+
+        return accessGranted;
+    }
+
+    checkPermissionGuard(permissionGuard: PermissionGuard): string {
+        let role = permissionGuard.Role;
+        let only = permissionGuard.Only;
+        let except = permissionGuard.Except;
+        if (!permissionGuard.RedirectTo)
+            permissionGuard.RedirectTo = "403";
+        if (only && except)
+            throw "Can't use both 'Only' and 'Except' in route data.";
+        if (role && only)
+            return "role+only";
+        else if (role && except)
+            return "role+except";
+        else if (only)
+            return "only";
+        else if (role)
+            return "role";
+        else if (except)
+            return "except";
     }
 
 }
