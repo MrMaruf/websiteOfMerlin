@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '10.x'
       - name: Install dependencies
-        run: npm instal
+        run: npm install
       - name: Build project
         run: npm run build:prod
       - name: Install firebase
