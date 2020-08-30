@@ -43,6 +43,7 @@ import { FormCleanNamePipe } from './shared/form-clean-name.pipe';
 import { KeycloakService } from './auth/keycloak.service';
 import { AuthGuardService } from './guard/auth-guard.service';
 import { SecuredHttpInterceptor } from './intereceptor/secured-http.service';
+import { AuthorComponent } from './author/author.component';
 
 /*
 Sub-components imports end
@@ -70,6 +71,7 @@ Sub-components imports end
     // CreateUneditedComponent,
     CharacterComponent,
     FormCleanNamePipe,
+    AuthorComponent,
 
   ],
   imports: [
