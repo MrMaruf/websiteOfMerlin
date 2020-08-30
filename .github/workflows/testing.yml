@@ -1,0 +1,19 @@
+name: Testing the app on pushes/pull-requests
+
+on: [push, pull-request]
+
+jobs:
+  angular-unit-testing:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node/npm
+        uses: actions/setup-node@master
+        with:
+          node-version: '10.x'
+      - name: Install dependencies
+        run: npm instal
+      - name: Build project
+        run: npm run test

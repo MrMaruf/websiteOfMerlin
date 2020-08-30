@@ -1,0 +1,30 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Merlin Website Workflow
+
+on:
+  push:
+      # branches-ignore:
+      #   - master
+    branches: [ master ]
+
+jobs:
+  firebase-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node/npm
+        uses: actions/setup-node@master
+        with:
+          node-version: '10.x'
+      - name: Install dependencies
+        run: npm instal
+      - name: Build project
+        run: npm run build:prod
+      - name: Install firebase
+        run: npm i -g firebase-tools
+      - name: Deploy to firebase hosting using token
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
