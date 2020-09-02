@@ -7,8 +7,9 @@ import { KeycloakService } from './app/auth/keycloak.service';
 
 if (environment.production) {
   enableProdMode();
+  platformBrowserDynamic().bootstrapModule( AppModule );
 }
-
+else
 KeycloakService.init()
 .then(() => {
     console.log("kc init ok");
