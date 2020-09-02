@@ -27,24 +27,14 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-// import { HistoryComponent } from './history/history.component';
-// import { SearchPipe } from './shared/search.pipe';
-// import { HistoryService } from './history/history.service';
-// import { ChapterComponent } from './history/chapter/chapter.component';
-// import { SkillComponent } from './history/chapter/skill/skill.component';
-// import { AbilityComponent } from './history/chapter/ability/ability.component';
-// import { SavesComponent } from './history/chapter/saves/saves.component';
-// import { SkillsComponent } from './history/chapter/skills/skills.component';
-// import { SpellComponent } from './history/chapter/spell/spell.component';
-// import { UneditedComponent } from './unedited/unedited.component';
-// import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
 import { CharacterComponent } from './character/character.component';
 import { FormCleanNamePipe } from './shared/form-clean-name.pipe';
 import { KeycloakService } from './auth/keycloak.service';
 import { AuthGuardService } from './guard/auth-guard.service';
 import { SecuredHttpInterceptor } from './intereceptor/secured-http.service';
 import { AuthorComponent } from './author/author.component';
-
+// was commented
+import { SearchPipe } from './shared/search.pipe';
 /*
 Sub-components imports end
 */
@@ -53,25 +43,18 @@ Sub-components imports end
 @NgModule({
   declarations: [
     AppComponent,
-    // SearchPipe,
     MessagePageComponent,
     SignInComponent,
     SignUpComponent,
     AboutComponent,
     HeaderComponent,
-    // HistoryComponent,
-    // ChapterComponent,
-    // SkillComponent,
-    // AbilityComponent,
-    // SavesComponent,
-    // SpellComponent,
     FooterComponent,
-    // SkillsComponent,
-    // UneditedComponent,
-    // CreateUneditedComponent,
     CharacterComponent,
     FormCleanNamePipe,
     AuthorComponent,
+    // was commented
+    SearchPipe,
+    
 
   ],
   imports: [
@@ -94,7 +77,6 @@ Sub-components imports end
             useClass: SecuredHttpInterceptor,
             multi: true
         },
-    // HistoryService,
     
   ],
   bootstrap: [AppComponent]

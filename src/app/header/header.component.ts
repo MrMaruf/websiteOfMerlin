@@ -4,7 +4,6 @@ import { AuthService } from "../auth/auth.service";
 import { FirebaseService } from '../shared/firebase.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { HistoryService } from '../history/history.service';
 import { Subscription } from 'rxjs';
 import { KeycloakService } from '../auth/keycloak.service';
 
@@ -28,7 +27,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private authService: AuthService,
     private firebaseService: FirebaseService,
-    private historyService: HistoryService,
     private router:Router) {
       router.events.pipe(
         filter(event => event instanceof NavigationEnd)  
@@ -39,13 +37,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getKeycloakService(){
     return KeycloakService;
-  }
-  onFetchData() {
-    this.historyService.getAllData();
-  }
-
-  onSaveData() {
-    this.historyService.saveAllData();
   }
 
   onLogout() {
@@ -59,18 +50,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.loggedIn.subscribe(
-      () => {
-        if (this.authService.getToken()) {
-          this.authorised = true;
-          this.author = this.authService.getAuthState[1];
-        }
-      }
-    );
-    this.subscription = this.historyService.chaptersChanged.subscribe(
-      (data) => {
-        this.progressIndex = data.length-1;
-      });
+    // this.authService.loggedIn.subscribe(
+    //   () => {
+    //     if (this.authService.getToken()) {
+    //       this.authorised = true;
+    //       this.author = this.authService.getAuthState[1];
+    //     }
+    //   }
+    // );
+    // this.subscription = this.historyService.chaptersChanged.subscribe(
+    //   (data) => {
+    //     this.progressIndex = data.length-1;
+    //   });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

@@ -9,7 +9,8 @@ export class KeycloakService {
 
     static auth: any = {};
     static redirectUrl: string;
-
+    constructor() {
+    }
     /**
      * Initialized keycloak client
      */
@@ -84,6 +85,7 @@ export class KeycloakService {
      */
     static login() {
         KeycloakService.auth.authz.login();
+
     }
 
     /**

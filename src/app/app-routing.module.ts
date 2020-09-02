@@ -6,15 +6,11 @@ Sub-components imports start
 */
 import { AuthGuardService as AuthGuard } from './guard/auth-guard.service';
 import { MessagePageComponent } from './message-page/message-page.component'
-import { SignInComponent } from './auth/sign-in/sign-in.component';
-import { SignUpComponent } from './auth/sign-up/sign-up.component';
+// import { SignInComponent } from './auth/sign-in/sign-in.component';
+// import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AboutComponent } from './about/about.component';
 import { PermissionGuard } from './models/permission-guard.model';
 import { AuthorComponent } from './author/author.component';
-// import { HistoryComponent } from './history/history.component';
-// import { ChapterComponent } from './history/chapter/chapter.component';
-// import { UneditedComponent } from './unedited/unedited.component';
-// import { CreateUneditedComponent } from './create-unedited/create-unedited.component';
 
 /*
 Sub-components imports end
@@ -47,33 +43,14 @@ const routes: Routes = [
       }
     },
   // {
-  //   path: 'history', component: HistoryComponent, children: [
-  //     { path: '', component: MessagePageComponent },
-      
-
+  //   path: 'login', component: SignInComponent, children: [
+  //     {
+  //       path: 'wrong-password',
+  //       component: MessagePageComponent,
+  //       data: { message: 'The password is invalid or the user does not have a password.' }
+  //     },
   //   ]
   // },
-  // { path: 'unedited/new', component: CreateUneditedComponent},
-  // { path: 'unedited/:index', component: UneditedComponent},
-  // { path: 'chapter/:index', component: ChapterComponent},
-  // { path: 'chapter/ability/:index', component: ChapterComponent},
-  // { path: 'skill/:index', component: ChapterComponent},
-  // { path: 'spells/:index', component: ChapterComponent},
-  // { path: 'chapter/saves', component: ChapterComponent},
-  // {
-  //   path: 'register', component: SignUpComponent, children: [
-  //     {path: 'weak-password', component: MessagePageComponent, data: {message: 'Password should be at least 6 characters'}},
-  //   ]
-  // },
-  {
-    path: 'login', component: SignInComponent, children: [
-      {
-        path: 'wrong-password',
-        component: MessagePageComponent,
-        data: { message: 'The password is invalid or the user does not have a password.' }
-      },
-    ]
-  },
   { path: 'register-success', component: MessagePageComponent, data: { message: 'Process of registration was successful!' } },
   { path: 'login-success', component: MessagePageComponent, data: { message: 'You have successfully logged in!' } },
   { path: 'unauthorised-action', component: MessagePageComponent, data: { message: 'You are not authorised to do this action' } },
