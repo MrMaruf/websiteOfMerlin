@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Input} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
 })
 export class MessagePageComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  message: string = '';
+  @Input() message: string = '';
 
   constructor(private route: ActivatedRoute) {
   }
@@ -17,7 +17,9 @@ export class MessagePageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.route.data.subscribe(
       (data: Data) => {
-        this.message = data['message'];
+        let message = data['message'];
+        if(message)
+          this.message = message;
       }
     );
   }
