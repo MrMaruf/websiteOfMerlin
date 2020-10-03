@@ -8,6 +8,7 @@ import { PermissionGuard } from '../models/permission-guard.model';
 export class AuthGuardService implements CanActivate, CanLoad {
 
     constructor(public router: Router, private keycloakService: KeycloakService) {
+        
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

@@ -54,8 +54,6 @@ Sub-components imports end
     AuthorComponent,
     // was commented
     SearchPipe,
-    
-
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -71,16 +69,13 @@ Sub-components imports end
   providers: [
     FirebaseService,
     KeycloakService,
-        AuthGuardService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: SecuredHttpInterceptor,
-            multi: true
-        },
-    
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SecuredHttpInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
-
-
 export class AppModule { }

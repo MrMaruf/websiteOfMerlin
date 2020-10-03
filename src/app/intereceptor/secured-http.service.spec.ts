@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SecuredHttpService } from './secured-http.service';
+import { SecuredHttpInterceptor } from './secured-http.service';
 
-describe('SecuredHttpService', () => {
+describe('SecuredHttpInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: SecuredHttpService = TestBed.get(SecuredHttpService);
+    const service: SecuredHttpInterceptor = TestBed.get(SecuredHttpInterceptor);
     expect(service).toBeTruthy();
   });
 });
